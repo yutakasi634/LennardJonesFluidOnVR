@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class InitialConfGenerator : MonoBehaviour
 {
-    public float temperature;
-    public float kb;
-    public float box_size;
-    public float mass;
-    public uint  total_particle_num;
+    public float temperature        = 300.0f;
+    public float kb                 = 0.8317e-4f; // mass:Da, length:Å, time:0.01ps
+    public float box_size           = 5.0f;
+    public float mass               = 1.0f;
+    public uint  total_particle_num = 500;
     public Rigidbody projectile;
 
     private float sigma;
@@ -17,15 +17,6 @@ public class InitialConfGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Instantiate at position (0, 0, 0) and zero rotation.
-        // GameObject p = Instantiate(myPrefab, new Vector3(1.0f, 1.0f, 1.0f), Quaternion.identity);
-       
-        temperature = 300.0f; 
-        //kb          = 0.8317f;          // mass:Da, length:Å, time:ps
-        kb          = 0.8317f * 10e-4f; // mass:Da, length:Å, time:0.01ps
-        box_size    = 5.0f;
-        total_particle_num = 500;
-        mass  = 1.0f;
         sigma = Mathf.Sqrt(kb * temperature / mass);
 
         // generate initial position
