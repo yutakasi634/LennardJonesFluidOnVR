@@ -3,45 +3,27 @@ using UnityEngine;
 
 public class Particle : MonoBehaviour
 {
-    public float sphere_radius;
-    public float epsilon;
-    public float temperature;
-    public float mass;
+    public float sphere_radius = 0.5f;
+    public float epsilon       = 0.05f;
+    public float mass          = 1.0f;
 
-    private float sigma; // sigma for gaussian in Maxwell distribution
-    private float kb;
     private Rigidbody      m_Rigidbody;
     private SphereCollider m_SphereCollider;
-    private float box_size;
-    private float force_range;
-    private float dump_coef;
+    private float box_size     = 5.0f;
     
     // Start is called before the first frame update
     void Start()
     {
         m_Rigidbody       = GetComponent<Rigidbody>();
         m_SphereCollider  = GetComponent<SphereCollider>();
-        sphere_radius              = 0.5f;
         m_SphereCollider.radius    = 2.5f * sphere_radius;
         m_SphereCollider.isTrigger = true;
-        box_size    = 5.0f;
-        //dump_coef   = 1.0f;
-        epsilon     = 0.05f;
         m_Rigidbody.useGravity = false;
-        mass                   = 1.0f;
         m_Rigidbody.mass       = mass;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     void FixedUpdate()
     {
-        //Vector3 force_vec -= dump_coef * m_Rigidbody.velocity.magnitude * m_Rigidbody.velocity;
-        //m_Rigidbody.AddForce(force_vec); 
-
         // fix by Periodic Boundary Condition
         Vector3 currentPos = transform.position;
         Vector3 currentVel = m_Rigidbody.velocity;
