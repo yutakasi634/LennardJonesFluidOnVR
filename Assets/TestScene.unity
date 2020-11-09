@@ -351,10 +351,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db8235ed622eca4b9f3557946e1f199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  temperature: 0
-  kb: 0
-  box_size: 0
-  mass: 0
-  total_particle_num: 0
+  temperature: 300
+  kb: 0.00008317
+  box_size: 5
+  mass: 1
+  total_particle_num: 500
   projectile: {fileID: 8467348767518545566, guid: 7b2653e1b49c93946866da3cf1343658,
     type: 3}
