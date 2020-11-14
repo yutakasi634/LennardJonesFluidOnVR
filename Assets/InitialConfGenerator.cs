@@ -9,7 +9,8 @@ public class InitialConfGenerator : MonoBehaviour
     public float kb                 = 0.8317e-4f; // mass:Da, length:Å, time:0.01ps
     public float box_size           = 5.0f;
     public uint  total_particle_num = 500;
-    public Rigidbody lj_particle;
+
+    public LennardJonesParticle lj_particle;
 
     // Start is called before the first frame update
     void Start()
@@ -50,12 +51,14 @@ public class InitialConfGenerator : MonoBehaviour
 
         foreach (Vector3 coord_vec in coords_list)
         {
-            Rigidbody new_particle = Instantiate(lj_particle, coord_vec, transform.rotation);
-            float sigma = Mathf.Sqrt(kb * temperature / new_particle.mass);
-            new_particle.velocity = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
-                                                NormalizedRandom.Generate(0.0f, sigma),
-                                                NormalizedRandom.Generate(0.0f, sigma));
-            new_particle.gameObject.GetComponent<Particle>().SetBoxSize(box_size);
+            LennardJonesParticle new_particle =
+                Instantiate(lj_particle, coord_vec, transform.rotation);
+            Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
+            float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
+            new_rigid.velocity = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
+                                             NormalizedRandom.Generate(0.0f, sigma),
+                                             NormalizedRandom.Generate(0.0f, sigma));
+            new_particle.SetBoxSize(box_size);
 
         }
         Debug.Log(coords_list.Count.ToString() + " particle generated.");
@@ -66,11 +69,13 @@ public class InitialConfGenerator : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Rigidbody new_particle = Instantiate(lj_particle, transform.position, transform.rotation);
-            float sigma = Mathf.Sqrt(kb * temperature / new_particle.mass);
-            new_particle.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
-                                                 NormalizedRandom.Generate(0.0f, sigma),
-                                                 NormalizedRandom.Generate(0.0f, sigma));
+            LennardJonesParticle new_particle =
+                Instantiate(lj_particle, transform.position, transform.rotation);
+            Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
+            float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
+            new_rigid.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
+                                              NormalizedRandom.Generate(0.0f, sigma),
+                                              NormalizedRandom.Generate(0.0f, sigma));
         }
     }
 }

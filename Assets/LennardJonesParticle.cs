@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Particle : MonoBehaviour
+public class LennardJonesParticle : MonoBehaviour
 {
     public float sphere_radius = 0.5f;
     public float epsilon       = 0.05f;
