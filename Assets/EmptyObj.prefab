@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8036251953374215869}
-  - component: {fileID: 1577414364717336072}
   m_Layer: 0
   m_Name: EmptyObj
   m_TagString: Untagged
@@ -31,22 +30,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1577414364717336072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8234603261816765633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db8235ed622eca4b9f3557946e1f199, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  temperature: 300
-  kb: 0.00008317
-  box_size: 5
-  mass: 1
-  total_particle_num: 500
-  projectile: {fileID: 8467348767518545566, guid: 7b2653e1b49c93946866da3cf1343658,
-    type: 3}

@@ -248,8 +248,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: EmptyObj
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1577414364717336072, guid: 53f6b7adadff21e40a3021d778be31da, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53f6b7adadff21e40a3021d778be31da, type: 3}
 --- !u!1 &1944738524
 GameObject:
@@ -354,7 +353,6 @@ MonoBehaviour:
   temperature: 300
   kb: 0.00008317
   box_size: 5
-  mass: 1
   total_particle_num: 500
-  projectile: {fileID: 8467348767518545566, guid: 7b2653e1b49c93946866da3cf1343658,
+  lj_particle: {fileID: 8467348767518545566, guid: 7b2653e1b49c93946866da3cf1343658,
     type: 3}
