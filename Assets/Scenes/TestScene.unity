@@ -354,5 +354,5 @@ MonoBehaviour:
   kb: 0.00008317
   box_size: 5
   total_particle_num: 500
-  lj_particle: {fileID: 8467348767518545566, guid: 7b2653e1b49c93946866da3cf1343658,
+  lj_particle: {fileID: 8221608063214272347, guid: 7b2653e1b49c93946866da3cf1343658,
     type: 3}

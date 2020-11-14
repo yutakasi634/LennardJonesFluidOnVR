@@ -102,12 +102,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8221608063214272350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2583746c0b2d57140aa16c0ccd4f7a4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 21ab311d6fa708d46b9657ec51d906c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sphere_radius: 0.5
   epsilon: 0.05
-  mass: 1
 --- !u!54 &8467348767518545566
 Rigidbody:
   m_ObjectHideFlags: 0
