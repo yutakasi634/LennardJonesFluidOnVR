@@ -8,17 +8,12 @@ public class InitialConfGenerator : MonoBehaviour
     public float temperature        = 300.0f;
     public float kb                 = 0.8317e-4f; // mass:Da, length:Å, time:0.01ps
     public float box_size           = 5.0f;
-    public float mass               = 1.0f;
     public uint  total_particle_num = 500;
-    public Rigidbody projectile;
-
-    private float sigma;
+    public Rigidbody lj_particle;
 
     // Start is called before the first frame update
     void Start()
     {
-        sigma = Mathf.Sqrt(kb * temperature / mass);
-
         // generate initial position
         List<Vector3> coords_list = new List<Vector3>();
         uint positioned_particle_num = 0;
@@ -49,17 +44,17 @@ public class InitialConfGenerator : MonoBehaviour
             {
                 coords_list.Add(new_coord);
                 positioned_particle_num += 1;
-                //Debug.Log("determin particle " + positioned_particle_num.ToString() + "position");
                 trial_time = 0;
             }
         }
 
         foreach (Vector3 coord_vec in coords_list)
         {
-            Rigidbody particle = Instantiate(projectile, coord_vec, transform.rotation);
-            particle.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
-                                             NormalizedRandom.Generate(0.0f, sigma), 
-                                             NormalizedRandom.Generate(0.0f, sigma));
+            Rigidbody new_particle = Instantiate(lj_particle, coord_vec, transform.rotation);
+            float sigma = Mathf.Sqrt(kb * temperature / new_particle.mass);
+            new_particle.velocity = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
+                                                NormalizedRandom.Generate(0.0f, sigma),
+                                                NormalizedRandom.Generate(0.0f, sigma));
             new_particle.gameObject.GetComponent<Particle>().SetBoxSize(box_size);
 
         }
@@ -71,10 +66,11 @@ public class InitialConfGenerator : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Rigidbody particle = Instantiate(projectile, transform.position, transform.rotation);
-            particle.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
-                                             NormalizedRandom.Generate(0.0f, sigma), 
-                                             NormalizedRandom.Generate(0.0f, sigma));
+            Rigidbody new_particle = Instantiate(lj_particle, transform.position, transform.rotation);
+            float sigma = Mathf.Sqrt(kb * temperature / new_particle.mass);
+            new_particle.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
+                                                 NormalizedRandom.Generate(0.0f, sigma),
+                                                 NormalizedRandom.Generate(0.0f, sigma));
         }
     }
 }

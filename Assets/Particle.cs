@@ -1,11 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿using System;
 using UnityEngine;
 
 public class Particle : MonoBehaviour
 {
     public float sphere_radius = 0.5f;
     public float epsilon       = 0.05f;
-    public float mass          = 1.0f;
 
     private Rigidbody      m_Rigidbody;
     private SphereCollider m_SphereCollider;
@@ -25,7 +24,6 @@ public class Particle : MonoBehaviour
         m_SphereCollider.radius    = 2.5f * sphere_radius;
         m_SphereCollider.isTrigger = true;
         m_Rigidbody.useGravity = false;
-        m_Rigidbody.mass       = mass;
     }
 
     void FixedUpdate()
@@ -59,4 +57,4 @@ public class Particle : MonoBehaviour
         float derivative = 24.0f * epsilon * (r6s6 - 2.0f * r12s12) * rinv;
         m_Rigidbody.AddForce(derivative * rinv * dist_vec);
     }
-}
+};
