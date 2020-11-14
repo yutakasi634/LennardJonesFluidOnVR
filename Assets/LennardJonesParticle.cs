@@ -21,11 +21,13 @@ public class LennardJonesParticle : MonoBehaviour
     {
         m_Rigidbody       = GetComponent<Rigidbody>();
         m_SphereCollider  = GetComponent<SphereCollider>();
-        m_SphereCollider.radius    = 2.5f * sphere_radius; // This mean cutoff radius
+        // This radius mean cutoff radius
+        m_SphereCollider.radius    = 2.5f * sphere_radius;
         m_SphereCollider.isTrigger = true;
-        m_Rigidbody.useGravity = false;
+        m_Rigidbody.useGravity     = false;
     }
 
+    // TODO: separate PBC box manipulation to the class for that
     void FixedUpdate()
     {
         // fix by Periodic Boundary Condition
