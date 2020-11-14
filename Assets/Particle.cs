@@ -9,8 +9,14 @@ public class Particle : MonoBehaviour
 
     private Rigidbody      m_Rigidbody;
     private SphereCollider m_SphereCollider;
-    private float box_size     = 5.0f;
-    
+    private float          box_size;
+
+
+    internal void SetBoxSize(float size)
+    {
+        box_size = size;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

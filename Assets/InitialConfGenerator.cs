@@ -60,6 +60,7 @@ public class InitialConfGenerator : MonoBehaviour
             particle.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
                                              NormalizedRandom.Generate(0.0f, sigma), 
                                              NormalizedRandom.Generate(0.0f, sigma));
+            new_particle.gameObject.GetComponent<Particle>().SetBoxSize(box_size);
 
         }
         Debug.Log(coords_list.Count.ToString() + " particle generated.");
