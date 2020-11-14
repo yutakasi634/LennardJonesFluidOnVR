@@ -12,30 +12,37 @@ public class InitialConfGenerator : MonoBehaviour
 
     public LennardJonesParticle lj_particle;
 
+    private uint max_trial_num      = 500;
+
     // Start is called before the first frame update
     void Start()
     {
-        // generate initial position
-        List<Vector3> coords_list = new List<Vector3>();
-        uint positioned_particle_num = 0;
-        uint trial_time              = 0;
-        while (positioned_particle_num < total_particle_num && trial_time < 500)
+        // generate initial particle positions
+        List<LennardJonesParticle> lj_part_list = new List<LennardJonesParticle>();
+        uint trial_num               = 0;
+        while (lj_part_list.Count < total_particle_num && trial_num < max_trial_num)
         {
-            trial_time += 1;
+            trial_num += 1;
             Vector3 new_coord = new Vector3(Random.Range(-box_size, box_size),
                                             Random.Range(-box_size, box_size),
                                             Random.Range(-box_size, box_size));
+
+            // check collision with existing particles
             bool acceptable = true;
-            if (coords_list.Count == 0) 
+            if (lj_part_list.Count == 0)
             {
-                coords_list.Add(new_coord); 
-                positioned_particle_num += 1;
+                LennardJonesParticle new_particle =
+                    Instantiate(lj_particle, new_coord, transform.rotation);
+                new_particle.SetBoxSize(box_size);
+                lj_part_list.Add(new_particle);
                 continue;
             }
 
-            foreach (Vector3 fixed_pos in coords_list)
+            float check_range = lj_part_list[0].sphere_radius * 2;
+            foreach (LennardJonesParticle fixed_part in lj_part_list)
             {
-                if ((fixed_pos - new_coord).magnitude < 1.0f) 
+                float distance = (fixed_part.transform.position - new_coord).magnitude;
+                if (distance < check_range)
                 { 
                     acceptable = false;
                     break;
@@ -43,25 +50,24 @@ public class InitialConfGenerator : MonoBehaviour
             }
             if (acceptable)
             {
-                coords_list.Add(new_coord);
-                positioned_particle_num += 1;
-                trial_time = 0;
+                LennardJonesParticle new_particle =
+                    Instantiate(lj_particle, new_coord, transform.rotation);
+                new_particle.SetBoxSize(box_size);
+                lj_part_list.Add(new_particle);
+                trial_num = 0;
             }
         }
 
-        foreach (Vector3 coord_vec in coords_list)
+        // generate initial particle velocity
+        foreach (LennardJonesParticle lj_part in lj_part_list)
         {
-            LennardJonesParticle new_particle =
-                Instantiate(lj_particle, coord_vec, transform.rotation);
-            Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
+            Rigidbody new_rigid = lj_part.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
             new_rigid.velocity = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
                                              NormalizedRandom.Generate(0.0f, sigma),
                                              NormalizedRandom.Generate(0.0f, sigma));
-            new_particle.SetBoxSize(box_size);
 
         }
-        Debug.Log(coords_list.Count.ToString() + " particle generated.");
     }
 
     // Update is called once per frame
