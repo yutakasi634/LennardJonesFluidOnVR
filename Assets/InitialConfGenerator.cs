@@ -10,17 +10,17 @@ public class InitialConfGenerator : MonoBehaviour
     public float box_size           = 5.0f;
     public uint  total_particle_num = 500;
 
-    public LennardJonesParticle lj_particle;
+    public LennardJonesParticle m_LJParticle;
 
-    private SystemManager system_manager;
+    private SystemManager m_SystemManager;
     private uint max_trial_num      = 500;
 
     // Start is called before the first frame update
     void Start()
     {
-        system_manager = GetComponent<SystemManager>();
-        system_manager.ljparticles = new List<LennardJonesParticle>();
-        List<LennardJonesParticle> lj_part_list = system_manager.ljparticles;
+        m_SystemManager = GetComponent<SystemManager>();
+        m_SystemManager.ljparticles = new List<LennardJonesParticle>();
+        List<LennardJonesParticle> lj_part_list = m_SystemManager.ljparticles;
         // generate initial particle positions
         uint trial_num               = 0;
         while (lj_part_list.Count < total_particle_num && trial_num < max_trial_num)
@@ -35,7 +35,7 @@ public class InitialConfGenerator : MonoBehaviour
             if (lj_part_list.Count == 0)
             {
                 LennardJonesParticle new_particle =
-                    Instantiate(lj_particle, new_coord, transform.rotation);
+                    Instantiate(m_LJParticle, new_coord, transform.rotation);
                 new_particle.SetBoxSize(box_size);
                 lj_part_list.Add(new_particle);
                 continue;
@@ -54,7 +54,7 @@ public class InitialConfGenerator : MonoBehaviour
             if (acceptable)
             {
                 LennardJonesParticle new_particle =
-                    Instantiate(lj_particle, new_coord, transform.rotation);
+                    Instantiate(m_LJParticle, new_coord, transform.rotation);
                 new_particle.SetBoxSize(box_size);
                 lj_part_list.Add(new_particle);
                 trial_num = 0;
@@ -73,7 +73,7 @@ public class InitialConfGenerator : MonoBehaviour
         }
 
         // Initialize SystemManager
-        system_manager.Init();
+        m_SystemManager.Init();
     }
 
     // Update is called once per frame
@@ -82,14 +82,14 @@ public class InitialConfGenerator : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             LennardJonesParticle new_particle =
-                Instantiate(lj_particle, transform.position, transform.rotation);
+                Instantiate(m_LJParticle, transform.position, transform.rotation);
             new_particle.SetBoxSize(box_size);
             Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
             new_rigid.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
                                               NormalizedRandom.Generate(0.0f, sigma),
                                               NormalizedRandom.Generate(0.0f, sigma));
-            system_manager.ljparticles.Add(new_particle);
+            m_SystemManager.ljparticles.Add(new_particle);
         }
     }
 }
