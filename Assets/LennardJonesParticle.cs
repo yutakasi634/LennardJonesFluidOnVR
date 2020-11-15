@@ -8,7 +8,6 @@ public class LennardJonesParticle : MonoBehaviour
 
     private Rigidbody      m_Rigidbody;
     private SphereCollider m_SphereCollider;
-    private float          box_size;
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +30,5 @@ public class LennardJonesParticle : MonoBehaviour
         float r12s12     = r6s6 * r6s6;
         float derivative = 24.0f * epsilon * (r6s6 - 2.0f * r12s12) * rinv;
         m_Rigidbody.AddForce(derivative * rinv * dist_vec);
-    }
-
-    internal void SetBoxSize(float size)
-    {
-        box_size = size;
     }
 };

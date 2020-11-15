@@ -36,7 +36,6 @@ public class InitialConfGenerator : MonoBehaviour
             {
                 LennardJonesParticle new_particle =
                     Instantiate(m_LJParticle, new_coord, transform.rotation);
-                new_particle.SetBoxSize(box_size);
                 lj_part_list.Add(new_particle);
                 continue;
             }
@@ -55,7 +54,6 @@ public class InitialConfGenerator : MonoBehaviour
             {
                 LennardJonesParticle new_particle =
                     Instantiate(m_LJParticle, new_coord, transform.rotation);
-                new_particle.SetBoxSize(box_size);
                 lj_part_list.Add(new_particle);
                 trial_num = 0;
             }
@@ -83,7 +81,6 @@ public class InitialConfGenerator : MonoBehaviour
         {
             LennardJonesParticle new_particle =
                 Instantiate(m_LJParticle, transform.position, transform.rotation);
-            new_particle.SetBoxSize(box_size);
             Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
             new_rigid.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
