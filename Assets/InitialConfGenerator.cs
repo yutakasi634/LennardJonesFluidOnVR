@@ -71,6 +71,9 @@ public class InitialConfGenerator : MonoBehaviour
                                              NormalizedRandom.Generate(0.0f, sigma));
 
         }
+
+        // Initialize SystemManager
+        system_manager.Init();
     }
 
     // Update is called once per frame
