@@ -21,27 +21,6 @@ public class LennardJonesParticle : MonoBehaviour
         m_Rigidbody.useGravity     = false;
     }
 
-    // TODO: separate PBC box manipulation to the class for that
-    void FixedUpdate()
-    {
-        // fix by Periodic Boundary Condition
-        Vector3 currentPos = transform.position;
-        Vector3 currentVel = m_Rigidbody.velocity;
-        if (Mathf.Abs(currentPos.x) > box_size)
-        {
-            currentVel.x = -currentVel.x;
-        }
-        if(Mathf.Abs(currentPos.y) > box_size)
-        {
-            currentVel.y = -currentVel.y;
-        }
-        if (Mathf.Abs(currentPos.z) > box_size)
-        {
-            currentVel.z = -currentVel.z;
-        }
-        m_Rigidbody.velocity = currentVel;
-    }
-
     void OnTriggerStay(Collider other)
     {
         Vector3 dist_vec = other.attachedRigidbody.position - transform.position;

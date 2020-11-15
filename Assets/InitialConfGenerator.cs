@@ -73,7 +73,7 @@ public class InitialConfGenerator : MonoBehaviour
         }
 
         // Initialize SystemManager
-        m_SystemManager.Init();
+        m_SystemManager.Init(box_size);
     }
 
     // Update is called once per frame
