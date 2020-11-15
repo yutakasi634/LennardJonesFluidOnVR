@@ -31,7 +31,7 @@ public class SystemManager : MonoBehaviour
     {
         foreach (LennardJonesParticle lj_part in ljparticles)
         {
-            // fix by Periodic Boundary Condition
+            // fix by Reflecting Boundary Condition
             Rigidbody lj_rigid = lj_part.GetComponent<Rigidbody>();
             Vector3 currentPos = lj_rigid.position;
             Vector3 currentVel = lj_rigid.velocity;
