@@ -1,6 +1,6 @@
 # LennardJonesFluidOnUnity
 This is the repository for practicing Unity Scripting.
-Simple implementation of Lennard-jones fluid.
+Simple implementation of Lennard-jones fluid running on Oculus Rift.
 
 Unity 2018.4.20f1 is supported.
 
