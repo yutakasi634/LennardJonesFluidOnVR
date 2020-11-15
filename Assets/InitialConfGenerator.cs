@@ -12,13 +12,16 @@ public class InitialConfGenerator : MonoBehaviour
 
     public LennardJonesParticle lj_particle;
 
+    private SystemManager system_manager;
     private uint max_trial_num      = 500;
 
     // Start is called before the first frame update
     void Start()
     {
+        system_manager = GetComponent<SystemManager>();
+        system_manager.ljparticles = new List<LennardJonesParticle>();
+        List<LennardJonesParticle> lj_part_list = system_manager.ljparticles;
         // generate initial particle positions
-        List<LennardJonesParticle> lj_part_list = new List<LennardJonesParticle>();
         uint trial_num               = 0;
         while (lj_part_list.Count < total_particle_num && trial_num < max_trial_num)
         {
@@ -77,11 +80,13 @@ public class InitialConfGenerator : MonoBehaviour
         {
             LennardJonesParticle new_particle =
                 Instantiate(lj_particle, transform.position, transform.rotation);
+            new_particle.SetBoxSize(box_size);
             Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
             new_rigid.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
                                               NormalizedRandom.Generate(0.0f, sigma),
                                               NormalizedRandom.Generate(0.0f, sigma));
+            system_manager.ljparticles.Add(new_particle);
         }
     }
 }
