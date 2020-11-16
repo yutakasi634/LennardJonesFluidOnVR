@@ -67,7 +67,6 @@ public class InitialConfGenerator : MonoBehaviour
             new_rigid.velocity = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
                                              NormalizedRandom.Generate(0.0f, sigma),
                                              NormalizedRandom.Generate(0.0f, sigma));
-
         }
 
         // Initialize SystemManager

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class LennardJonesParticle : MonoBehaviour
 {
@@ -14,10 +15,13 @@ public class LennardJonesParticle : MonoBehaviour
     {
         m_Rigidbody       = GetComponent<Rigidbody>();
         m_SphereCollider  = GetComponent<SphereCollider>();
+
+        // Check no gravity apply to this particle
+        Assert.IsFalse(m_Rigidbody.useGravity);
+
         // This radius mean cutoff radius
         m_SphereCollider.radius    = 2.5f * sphere_radius;
         m_SphereCollider.isTrigger = true;
-        m_Rigidbody.useGravity     = false;
     }
 
     void OnTriggerStay(Collider other)
