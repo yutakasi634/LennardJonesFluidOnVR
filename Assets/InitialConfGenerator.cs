@@ -12,13 +12,15 @@ public class InitialConfGenerator : MonoBehaviour
 
     public LennardJonesParticle m_LJParticle;
 
-    private SystemManager m_SystemManager;
+    private NormalizedRandom m_NormalizedRandom;
+    private SystemManager    m_SystemManager;
     private uint max_trial_num      = 500;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_SystemManager = GetComponent<SystemManager>();
+        m_NormalizedRandom = new NormalizedRandom();
+        m_SystemManager    = GetComponent<SystemManager>();
         m_SystemManager.ljparticles = new List<LennardJonesParticle>();
         List<LennardJonesParticle> lj_part_list = m_SystemManager.ljparticles;
         // generate initial particle positions
@@ -64,9 +66,9 @@ public class InitialConfGenerator : MonoBehaviour
         {
             Rigidbody new_rigid = lj_part.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
-            new_rigid.velocity = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
-                                             NormalizedRandom.Generate(0.0f, sigma),
-                                             NormalizedRandom.Generate(0.0f, sigma));
+            new_rigid.velocity = new Vector3(m_NormalizedRandom.Generate(0.0f, sigma),
+                                             m_NormalizedRandom.Generate(0.0f, sigma),
+                                             m_NormalizedRandom.Generate(0.0f, sigma));
         }
 
         // Initialize SystemManager
@@ -82,9 +84,9 @@ public class InitialConfGenerator : MonoBehaviour
                 Instantiate(m_LJParticle, transform.position, transform.rotation);
             Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
-            new_rigid.velocity  = new Vector3(NormalizedRandom.Generate(0.0f, sigma),
-                                              NormalizedRandom.Generate(0.0f, sigma),
-                                              NormalizedRandom.Generate(0.0f, sigma));
+            new_rigid.velocity  = new Vector3(m_NormalizedRandom.Generate(0.0f, sigma),
+                                              m_NormalizedRandom.Generate(0.0f, sigma),
+                                              m_NormalizedRandom.Generate(0.0f, sigma));
             m_SystemManager.ljparticles.Add(new_particle);
         }
     }
