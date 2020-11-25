@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Nett;
 
 public class InitialConfGenerator : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class InitialConfGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // read input file
+        string input_file_path = Application.dataPath + "/../input/test_input.toml";
+        TomlTable root = Toml.ReadFile(input_file_path);
+        string title = root.Get<string>("title");
+        Debug.Log("The input file title is " + title);
+
         m_NormalizedRandom = new NormalizedRandom();
         m_SystemManager    = GetComponent<SystemManager>();
         m_SystemManager.ljparticles = new List<LennardJonesParticle>();
