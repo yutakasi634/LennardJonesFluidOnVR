@@ -24,22 +24,19 @@ public class InitialConfGenerator : MonoBehaviour
         List<TomlTable> particles = root.Get<List<TomlTable>>("particles");
         List<Vector3>   positions = new List<Vector3>();
 
-        foreach (TomlTable particle_info in particles)
-        {
-            float[] position = particle_info.Get<float[]>("pos");
-            positions.Add(new Vector3(position[0], position[1], position[2]));
-        }
-
         // generate initial particle position
         m_SystemManager = GetComponent<SystemManager>();
         m_SystemManager.ljparticles = new List<LennardJonesParticle>();
         List<LennardJonesParticle> lj_part_list = m_SystemManager.ljparticles;
-        foreach (Vector3 position in positions)
-        {
-            LennardJonesParticle new_particle =
-                Instantiate(m_LJParticle, position, transform.rotation);
-            lj_part_list.Add(new_particle);
 
+        foreach (TomlTable particle_info in particles)
+        {
+            float[] position = particle_info.Get<float[]>("pos");
+            LennardJonesParticle new_particle =
+                Instantiate(m_LJParticle,
+                            new Vector3(position[0], position[1], position[2]),
+                            transform.rotation);
+            lj_part_list.Add(new_particle);
         }
 
         // generate initial particle velocity
