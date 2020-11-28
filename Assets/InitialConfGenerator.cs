@@ -22,12 +22,10 @@ public class InitialConfGenerator : MonoBehaviour
         string input_file_path = Application.dataPath + "/../input/system.toml";
         TomlTable root = Toml.ReadFile(input_file_path);
         List<TomlTable> particles = root.Get<List<TomlTable>>("particles");
-        List<Vector3>   positions = new List<Vector3>();
 
         // generate initial particle position
         m_SystemManager = GetComponent<SystemManager>();
         m_SystemManager.ljparticles = new List<LennardJonesParticle>();
-        List<LennardJonesParticle> lj_part_list = m_SystemManager.ljparticles;
 
         foreach (TomlTable particle_info in particles)
         {
@@ -36,12 +34,13 @@ public class InitialConfGenerator : MonoBehaviour
                 Instantiate(m_LJParticle,
                             new Vector3(position[0], position[1], position[2]),
                             transform.rotation);
-            lj_part_list.Add(new_particle);
+            m_SystemManager.ljparticles.Add(new_particle);
         }
+        Debug.Log("Initial particle positions were generated.");
 
         // generate initial particle velocity
         m_NormalizedRandom = new NormalizedRandom();
-        foreach (LennardJonesParticle lj_part in lj_part_list)
+        foreach (LennardJonesParticle lj_part in m_SystemManager.ljparticles)
         {
             Rigidbody new_rigid = lj_part.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
@@ -49,9 +48,11 @@ public class InitialConfGenerator : MonoBehaviour
                                              m_NormalizedRandom.Generate(0.0f, sigma),
                                              m_NormalizedRandom.Generate(0.0f, sigma));
         }
+        Debug.Log("Initial particle velocities were generated.");
 
         // Initialize SystemManager
         m_SystemManager.Init(box_size);
+        Debug.Log("SystemManager initialized.");
     }
 
     // Update is called once per frame

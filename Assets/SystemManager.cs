@@ -17,7 +17,6 @@ public class SystemManager : MonoBehaviour
     {
         InvokeRepeating("UpdateKineticEnergy", 0.1f, 0.1f);
     }
-
     // Update is called once per frame
     void Update()
     {
