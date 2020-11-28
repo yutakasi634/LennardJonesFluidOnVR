@@ -5,27 +5,10 @@ using UnityEngine.UI;
 
 public class SystemManager : MonoBehaviour
 {
-    public Text SystemMonitorPanel;
-
     private float m_BoxSize;
     internal List<LennardJonesParticle> ljparticles;
 
     private float kinetic_ene;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        InvokeRepeating("UpdateKineticEnergy", 0.1f, 0.1f);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        SystemMonitorPanel.text =
-            "System status\n" +
-            $"particle num : {ljparticles.Count}\n" +
-            $"kinetic energy : {kinetic_ene.ToString("F02")}";
-    }
-
     private void FixedUpdate()
     {
         foreach (LennardJonesParticle lj_part in ljparticles)
