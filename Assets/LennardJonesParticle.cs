@@ -26,6 +26,11 @@ public class LennardJonesParticle : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if (other.GetComponent<LennardJonesParticle>() == null)
+        {
+            return;
+        }
+
         Vector3 dist_vec = other.attachedRigidbody.position - transform.position;
         float rinv       = 1.0f / dist_vec.magnitude;
         float r1s1       = sphere_radius * rinv;
