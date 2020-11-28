@@ -249,7 +249,6 @@ MonoBehaviour:
   temperature: 300
   kb: 0.00008317
   box_size: 5
-  total_particle_num: 500
   m_LJParticle: {fileID: 8221608063214272347, guid: 7b2653e1b49c93946866da3cf1343658,
     type: 3}
 --- !u!1001 &162132383
