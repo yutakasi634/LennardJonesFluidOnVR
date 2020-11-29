@@ -6,12 +6,20 @@ using UnityEngine.UI;
 public class SystemManager : MonoBehaviour
 {
     private float m_BoxSize;
-    internal List<LennardJonesParticle> ljparticles;
+    private List<LennardJonesParticle> m_LJParticles;
 
     private float kinetic_ene;
+
+    internal SystemManager(List<LennardJonesParticle> ljparticles, float box_size)
+    {
+        m_BoxSize = box_size;
+        m_LJParticles = ljparticles;
+        UpdateKineticEnergy();
+    }
+
     private void FixedUpdate()
     {
-        foreach (LennardJonesParticle lj_part in ljparticles)
+        foreach (LennardJonesParticle lj_part in m_LJParticles)
         {
             // fix by Reflecting Boundary Condition
             Rigidbody lj_rigid = lj_part.GetComponent<Rigidbody>();
@@ -33,16 +41,10 @@ public class SystemManager : MonoBehaviour
         }
     }
 
-    internal void Init(float box_size)
-    {
-        m_BoxSize = box_size;
-        UpdateKineticEnergy();
-    }
-
     internal void UpdateKineticEnergy()
     {
         kinetic_ene = 0.0f;
-        foreach (LennardJonesParticle lj_part in ljparticles)
+        foreach (LennardJonesParticle lj_part in m_LJParticles)
         {
             Rigidbody lj_Rigidbody = lj_part.GetComponent<Rigidbody>();
             kinetic_ene +=

@@ -40,7 +40,7 @@ public class InitialConfGenerator : MonoBehaviour
 
         // generate initial particle velocity
         m_NormalizedRandom = new NormalizedRandom();
-        foreach (LennardJonesParticle lj_part in m_SystemManager.ljparticles)
+        foreach (LennardJonesParticle lj_part in ljparticles)
         {
             Rigidbody new_rigid = lj_part.GetComponent<Rigidbody>();
             float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
@@ -51,7 +51,7 @@ public class InitialConfGenerator : MonoBehaviour
         Debug.Log("Initial particle velocities were generated.");
 
         // Initialize SystemManager
-        m_SystemManager.Init(box_size);
+        m_SystemManager = new SystemManager(ljparticles, box_size);
         Debug.Log("SystemManager initialized.");
     }
 
