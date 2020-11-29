@@ -10,13 +10,6 @@ public class SystemManager : MonoBehaviour
 
     private float kinetic_ene;
 
-    internal SystemManager(List<LennardJonesParticle> ljparticles, float box_size)
-    {
-        m_BoxSize = box_size;
-        m_LJParticles = ljparticles;
-        UpdateKineticEnergy();
-    }
-
     private void FixedUpdate()
     {
         foreach (LennardJonesParticle lj_part in m_LJParticles)
@@ -39,6 +32,13 @@ public class SystemManager : MonoBehaviour
             }
             lj_rigid.velocity = currentVel;
         }
+    }
+
+    internal void Init (List<LennardJonesParticle> ljparticles, float box_size)
+    {
+        m_BoxSize = box_size;
+        m_LJParticles = ljparticles;
+        UpdateKineticEnergy();
     }
 
     internal void UpdateKineticEnergy()

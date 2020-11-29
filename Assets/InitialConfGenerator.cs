@@ -6,12 +6,12 @@ using Nett;
 
 public class InitialConfGenerator : MonoBehaviour
 {
-    public float temperature        = 300.0f;
-    public float kb                 = 0.8317e-4f; // mass:Da, length:Å, time:0.01ps
     public float box_size           = 5.0f;
 
     public LennardJonesParticle m_LJParticle;
 
+    private float temperature = 300.0f;
+    private float kb = 0.8317e-4f; // mass:Da, length:Å, time:0.01ps
     private NormalizedRandom m_NormalizedRandom;
     private SystemManager    m_SystemManager;
 
@@ -19,55 +19,49 @@ public class InitialConfGenerator : MonoBehaviour
     void Start()
     {
         // read input file
-        string input_file_path = Application.dataPath + "/../input/system.toml";
+        string input_file_path = Application.dataPath + "/../input/lennard-jones.toml";
         TomlTable root = Toml.ReadFile(input_file_path);
-        List<TomlTable> particles = root.Get<List<TomlTable>>("particles");
 
-        // generate initial particle position
-        m_SystemManager = GetComponent<SystemManager>();
-        m_SystemManager.ljparticles = new List<LennardJonesParticle>();
-
-        foreach (TomlTable particle_info in particles)
+        // generate initial particle position, velocity and system temperature
+        List<TomlTable> systems                = root.Get<List<TomlTable>>("systems");
+        List<LennardJonesParticle> ljparticles = new List<LennardJonesParticle>();
+        m_NormalizedRandom                     = new NormalizedRandom();
+        foreach (TomlTable system in systems)
         {
-            float[] position = particle_info.Get<float[]>("pos");
-            LennardJonesParticle new_particle =
-                Instantiate(m_LJParticle,
-                            new Vector3(position[0], position[1], position[2]),
-                            transform.rotation);
-            m_SystemManager.ljparticles.Add(new_particle);
-        }
-        Debug.Log("Initial particle positions were generated.");
+            temperature = system.Get<TomlTable>("attributes").Get<float>("temperature");
+            List<TomlTable> particles = system.Get<List<TomlTable>>("particles");
+            foreach (TomlTable particle_info in particles)
+            {
+                // initialize particle position
+                float[] position = particle_info.Get<float[]>("pos");
+                LennardJonesParticle new_particle =
+                    Instantiate(m_LJParticle,
+                                new Vector3(position[0], position[1], position[2]),
+                                transform.rotation);
 
-        // generate initial particle velocity
-        m_NormalizedRandom = new NormalizedRandom();
-        foreach (LennardJonesParticle lj_part in ljparticles)
-        {
-            Rigidbody new_rigid = lj_part.GetComponent<Rigidbody>();
-            float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
-            new_rigid.velocity = new Vector3(m_NormalizedRandom.Generate(0.0f, sigma),
-                                             m_NormalizedRandom.Generate(0.0f, sigma),
-                                             m_NormalizedRandom.Generate(0.0f, sigma));
+                // initialize particle velocity
+                Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
+                new_rigid.mass = particle_info.Get<float>("m");
+                if (particle_info.ContainsKey("vel"))
+                {
+                    float[] velocity = particle_info.Get<float[]>("vel");
+                    new_rigid.velocity = new Vector3(velocity[0], velocity[1], velocity[2]);
+                }
+                else
+                {
+                    float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
+                    new_rigid.velocity = new Vector3(m_NormalizedRandom.Generate(0.0f, sigma),
+                                                     m_NormalizedRandom.Generate(0.0f, sigma),
+                                                     m_NormalizedRandom.Generate(0.0f, sigma));
+                }
+                ljparticles.Add(new_particle);
+            }
         }
-        Debug.Log("Initial particle velocities were generated.");
+        Debug.Log("System initialization finished.");
 
         // Initialize SystemManager
-        m_SystemManager = new SystemManager(ljparticles, box_size);
-        Debug.Log("SystemManager initialized.");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            LennardJonesParticle new_particle =
-                Instantiate(m_LJParticle, transform.position, transform.rotation);
-            Rigidbody new_rigid = new_particle.GetComponent<Rigidbody>();
-            float sigma = Mathf.Sqrt(kb * temperature / new_rigid.mass);
-            new_rigid.velocity  = new Vector3(m_NormalizedRandom.Generate(0.0f, sigma),
-                                              m_NormalizedRandom.Generate(0.0f, sigma),
-                                              m_NormalizedRandom.Generate(0.0f, sigma));
-            m_SystemManager.ljparticles.Add(new_particle);
-        }
+        m_SystemManager = GetComponent<SystemManager>();
+        m_SystemManager.Init(ljparticles, box_size);
+        Debug.Log("SystemManager initialization finished.");
     }
 }
