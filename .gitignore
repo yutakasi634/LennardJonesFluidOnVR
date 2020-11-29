@@ -7,4 +7,7 @@ Logs/
 Temp/
 obj/
 Packages/
-bin/
+/bin/*
+!/bin/input/
+/bin/input/*
+!/bin/input/lennard-jones.toml
