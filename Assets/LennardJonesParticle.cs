@@ -17,7 +17,7 @@ public class LennardJonesParticle : MonoBehaviour
         m_SphereCollider  = GetComponent<SphereCollider>();
 
         // Check no gravity apply to this particle
-        Assert.IsFalse(m_Rigidbody.useGravity);
+        Assert.IsFalse(m_Rigidbody.useGravity, "LJParticle should have false useGravity flag.");
 
         // This radius mean cutoff radius
         m_SphereCollider.radius    = 2.5f * sphere_radius;
