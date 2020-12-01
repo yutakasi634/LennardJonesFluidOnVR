@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Nett;
 
 public class InitialConfGenerator : MonoBehaviour
@@ -58,6 +59,26 @@ public class InitialConfGenerator : MonoBehaviour
             }
         }
         Debug.Log("System initialization finished.");
+
+        List<TomlTable> ffs        = root.Get<List<TomlTable>>("forcefields");
+        foreach (TomlTable ff in ffs)
+        {
+            List<TomlTable> global_ffs = ff.Get<List<TomlTable>>("global");
+            foreach (TomlTable global_ff in global_ffs)
+            {
+                Assert.AreEqual("LennardJones", global_ff.Get<string>("potential"),
+                    "The potential field is only allowed \"LennardJones\". Other potential or null is here.");
+                List<TomlTable> parameters = global_ff.Get<List<TomlTable>>("parameters");
+                foreach (TomlTable parameter in parameters)
+                {
+                    int index = parameter.Get<int>("index");
+                    float radius = parameter.Get<float>("sigma") / 2;
+                    ljparticles[index].sphere_radius        = radius;
+                    ljparticles[index].epsilon              = parameter.Get<float>("epsilon");
+                    ljparticles[index].transform.localScale = new Vector3(radius, radius, radius);
+                }
+            }
+        }
 
         // Initialize SystemManager
         m_SystemManager = GetComponent<SystemManager>();
