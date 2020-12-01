@@ -1,4 +1,4 @@
-# LennardJonesFluidOnUnity
+# LennardJonesFluidOnVR
 
 This is the repository for practicing Unity Scripting.
 Simple implementation of Lennard-jones fluid running on Oculus Rift.
