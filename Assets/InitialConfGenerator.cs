@@ -72,10 +72,11 @@ public class InitialConfGenerator : MonoBehaviour
                 foreach (TomlTable parameter in parameters)
                 {
                     int index = parameter.Get<int>("index");
-                    float radius = parameter.Get<float>("sigma") / 2;
+                    float sigma = parameter.Get<float>("sigma");
+                    float radius = sigma / 2;
                     ljparticles[index].sphere_radius        = radius;
                     ljparticles[index].epsilon              = parameter.Get<float>("epsilon");
-                    ljparticles[index].transform.localScale = new Vector3(radius, radius, radius);
+                    ljparticles[index].transform.localScale = new Vector3(sigma, sigma, sigma);
                 }
             }
         }
