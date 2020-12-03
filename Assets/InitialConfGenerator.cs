@@ -23,6 +23,10 @@ public class InitialConfGenerator : MonoBehaviour
 
         // generate initial particle position, velocity and system temperature
         List<TomlTable> systems                = root.Get<List<TomlTable>>("systems");
+        if (2 <= systems.Count)
+        {
+            throw new System.Exception($"There are {systems.Count} systems. the multiple systems case is not supported.");
+        }
         List<LennardJonesParticle> ljparticles = new List<LennardJonesParticle>();
         float[] upper_boundary = new float[3];
         float[] lower_boundary = new float[3];
