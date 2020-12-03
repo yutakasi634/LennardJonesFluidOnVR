@@ -12,3 +12,6 @@ Simple implementation of Lennard-jones fluid running on Oculus Rift.
 - Import `Oculus Integration 20.1` from Asset Store.
 - Accept the updates.
 - Configure settings following https://developer.oculus.com/documentation/unity/unity-conf-settings/ .
+- Update Spatializer plugin from Oculus menu.
+- Select the Oculus Spatializer Plugin from `Project Setting`>`Audio`.
+- Restart Unity.
