@@ -7,8 +7,6 @@ using Nett;
 
 public class InitialConfGenerator : MonoBehaviour
 {
-    public float box_size           = 5.0f;
-
     public LennardJonesParticle m_LJParticle;
 
     private float temperature = 300.0f;
@@ -26,10 +24,15 @@ public class InitialConfGenerator : MonoBehaviour
         // generate initial particle position, velocity and system temperature
         List<TomlTable> systems                = root.Get<List<TomlTable>>("systems");
         List<LennardJonesParticle> ljparticles = new List<LennardJonesParticle>();
+        float[] upper_boundary = new float[3];
+        float[] lower_boundary = new float[3];
         m_NormalizedRandom                     = new NormalizedRandom();
         foreach (TomlTable system in systems)
         {
-            temperature = system.Get<TomlTable>("attributes").Get<float>("temperature");
+            temperature              = system.Get<TomlTable>("attributes").Get<float>("temperature");
+            TomlTable boundary_shape = system.Get<TomlTable>("boundary_shape");
+            upper_boundary = boundary_shape.Get<float[]>("upper");
+            lower_boundary = boundary_shape.Get<float[]>("lower");
             List<TomlTable> particles = system.Get<List<TomlTable>>("particles");
             foreach (TomlTable particle_info in particles)
             {
@@ -83,7 +86,9 @@ public class InitialConfGenerator : MonoBehaviour
 
         // Initialize SystemManager
         m_SystemManager = GetComponent<SystemManager>();
-        m_SystemManager.Init(ljparticles, box_size);
+        m_SystemManager.Init(ljparticles,
+            new Vector3(upper_boundary[0], upper_boundary[1], upper_boundary[2]),
+            new Vector3(lower_boundary[0], lower_boundary[1], lower_boundary[2]));
         Debug.Log("SystemManager initialization finished.");
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class SystemManager : MonoBehaviour
 {
-    private float m_BoxSize;
+    private Vector3 m_UpperBoundary;
+    private Vector3 m_LowerBoundary;
     private List<LennardJonesParticle> m_LJParticles;
 
     private float kinetic_ene;
@@ -18,15 +19,15 @@ public class SystemManager : MonoBehaviour
             Rigidbody lj_rigid = lj_part.GetComponent<Rigidbody>();
             Vector3 currentPos = lj_rigid.position;
             Vector3 currentVel = lj_rigid.velocity;
-            if (Mathf.Abs(currentPos.x) > m_BoxSize)
+            if (currentPos.x < m_LowerBoundary.x || m_UpperBoundary.x < currentPos.x)
             {
                 currentVel.x = -currentVel.x;
             }
-            if (Mathf.Abs(currentPos.y) > m_BoxSize)
+            if (currentPos.y < m_LowerBoundary.y || m_UpperBoundary.y < currentPos.y)
             {
                 currentVel.y = -currentVel.y;
             }
-            if (Mathf.Abs(currentPos.z) > m_BoxSize)
+            if (currentPos.z < m_LowerBoundary.z || m_UpperBoundary.z < currentPos.z)
             {
                 currentVel.z = -currentVel.z;
             }
@@ -34,9 +35,10 @@ public class SystemManager : MonoBehaviour
         }
     }
 
-    internal void Init (List<LennardJonesParticle> ljparticles, float box_size)
+    internal void Init (List<LennardJonesParticle> ljparticles, Vector3 upper_boundary, Vector3 lower_boundary)
     {
-        m_BoxSize = box_size;
+        m_UpperBoundary = upper_boundary;
+        m_LowerBoundary = lower_boundary;
         m_LJParticles = ljparticles;
         UpdateKineticEnergy();
     }
