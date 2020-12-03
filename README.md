@@ -3,7 +3,7 @@
 This is the repository for practicing Unity Scripting.
 Simple implementation of Lennard-jones fluid running on Oculus Rift.
 
-![LJFluidOnUnity_comp](https://user-images.githubusercontent.com/15133454/99191625-2053f580-27b1-11eb-89da-874619b75f1b.gif)
+![LJFluidOnVR_1203_comp](https://user-images.githubusercontent.com/15133454/101038526-f4ad7980-35be-11eb-95d1-ca72b8aaeabf.gif)
 
 ## Requirements
 - Unity 2019.4.15f
