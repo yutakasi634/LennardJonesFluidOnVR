@@ -33,10 +33,17 @@ public class InitialConfGenerator : MonoBehaviour
         m_NormalizedRandom                     = new NormalizedRandom();
         foreach (TomlTable system in systems)
         {
-            temperature              = system.Get<TomlTable>("attributes").Get<float>("temperature");
-            TomlTable boundary_shape = system.Get<TomlTable>("boundary_shape");
-            upper_boundary = boundary_shape.Get<float[]>("upper");
-            lower_boundary = boundary_shape.Get<float[]>("lower");
+            temperature = system.Get<TomlTable>("attributes").Get<float>("temperature");
+            if (system.ContainsKey("boundary_shape"))
+            {
+                TomlTable boundary_shape = system.Get<TomlTable>("boundary_shape");
+                upper_boundary = boundary_shape.Get<float[]>("upper");
+                lower_boundary = boundary_shape.Get<float[]>("lower");
+            }
+            else
+            {
+                throw new System.Exception("There is no boundary_shape information. UnlimitedBoundary is not supported now.");
+            }
             List<TomlTable> particles = system.Get<List<TomlTable>>("particles");
             foreach (TomlTable particle_info in particles)
             {
