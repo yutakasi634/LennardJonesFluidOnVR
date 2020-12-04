@@ -23,7 +23,7 @@ When you execute simulation from `play` button of Unity application, locate your
 When you execute simulation by the binary file in `(ProjectRoot)/bin` folder, locate your input file as `(ProjectRoot)/bin/input/input.toml`.
 There are sample input file there.
 
-The detail of file format is like below. This file is a subset of [Mjolnir](https://github.com/Mjolnir-MD/Mjolnir)'s .
+The detail of file format is like below. This file is a subset of [Mjolnir](https://github.com/Mjolnir-MD/Mjolnir)'s format.
 
 ```toml
 [[systems]]
