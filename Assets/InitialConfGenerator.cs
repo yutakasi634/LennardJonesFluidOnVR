@@ -18,7 +18,7 @@ public class InitialConfGenerator : MonoBehaviour
     void Start()
     {
         // read input file
-        string input_file_path = Application.dataPath + "/../input/lennard-jones.toml";
+        string input_file_path = Application.dataPath + "/../input/input.toml";
         TomlTable root = Toml.ReadFile(input_file_path);
 
         // generate initial particle position, velocity and system temperature

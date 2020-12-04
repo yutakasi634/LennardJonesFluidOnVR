@@ -1,5 +1,7 @@
 [[systems]]
 attributes.temperature = 300.0
+boundary_shape.lower = [-5.0, -5.0, -5.0]
+boundary_shape.upper = [ 5.0,  5.0,  5.0]
 particles = [
 {m =  1.00, pos = [0.9084463866571024, 2.667970365022592, 0.6623741650618591], name = "LJParticle"},
 {m =  1.00, pos = [-0.39914657537482867, 2.9402571033179425, 3.5414659037905025], name = "LJParticle"},
