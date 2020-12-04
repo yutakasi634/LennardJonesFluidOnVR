@@ -10,4 +10,4 @@ Packages/
 /bin/*
 !/bin/input/
 /bin/input/*
-!/bin/input/lennard-jones.toml
+!/bin/input/input.toml
