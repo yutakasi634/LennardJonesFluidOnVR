@@ -10,11 +10,10 @@ Simple implementation of Lennard-jones fluid running on Oculus Rift.
 
 ## Project Setup
 - Import `Oculus Integration 20.1` from Asset Store.
-- Accept the updates.
+- Restart Unity and accept updates.
 - Configure settings following https://developer.oculus.com/documentation/unity/unity-conf-settings/ .
-- Update Spatializer plugin from Oculus menu.
-- Select the Oculus Spatializer Plugin from `Project Setting`>`Audio`.
-- Restart Unity.
+- Import NuGetForUnity. The unitypackage file is [here](https://github.com/GlitchEnzo/NuGetForUnity/releases).
+- Restart Unity and accept updates.
 
 ## Input file format
 You can specify each parameter of lennard-jones system, for example, radius of a specific particle, size of the simulation box, temperature and so on, by input file based on `Toml` format.
